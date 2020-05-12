@@ -2,40 +2,49 @@
 using namespace std;
 
 int main() {
-	if (fopen("in", "r")) freopen("in", "r", stdin), freopen("out", "w", stdout);
+    if (fopen("in", "r")) freopen("in", "r", stdin), freopen("out", "w", stdout);
 
     int T;
     cin >> T;
-    for (int t = 0; t < T; ++t) {
+    for (int t = 1; t <= T; ++t) {
+        cout << "Case #" << t << ": ";
+        
         int N;
         cin >> N;
         string P[55];
         for (int i = 0; i < N; ++i) cin >> P[i];
         
-        string a, b, c;
-        bool found = 1;
-        for (int i = 0; i < N && found; ++i) {
-            vector<string> v;
-			v.push_back("");
+        string l, m, r; // left, middle, end parts of final answer
+        bool ans = 1; // flag so we can quickly break when no solution exists
+        for (int i = 0; i < N && ans; ++i) {
+            // tokenize string
+            vector<string> parts;
+			parts.push_back("");
             for (auto& c : P[i]) {
-                if (c == '*') v.push_back("");
-                else v.back() += c;
+                if (c == '*') parts.push_back(""); // add new string
+                else parts.back() += c; // add c to current string
             }
-            for (int j = 0; j < v.front().size() && found; ++j) {
-                if (j >= a.size()) a.push_back(v.front()[j]);
-                else if (v.front()[j] != a[j]) found = 0;
+            
+            string& s = parts.front(); // leftmost part
+            for (int j = 0; j < s.size() && ans; ++j) {
+                if (j >= l.size()) l.push_back(s[j]); // extend l
+                else if (s[j] != l[j]) ans = 0; // s doesn't match with current l
             }
-            reverse(v.back().begin(), v.back().end());
-            for (int j = 0; j < v.back().size() && found; ++j) {
-                if (j >= c.size()) c.push_back(v.back()[j]);
-                else if (v.back()[j] != c[j]) found = 0;
+            
+            s = parts.back(); // rightmost part
+            reverse(s.begin(), s.end());
+            for (int j = 0; j < s.size() && ans; ++j) {
+                if (j >= r.size()) r.push_back(s[j]); // extend r
+                else if (s[j] != r[j]) ans = 0; // s doesn't match with current r
             }
-            for (int j = 1; j < v.size() - 1; ++j) b += v[j];
+            
+            // add other parts to the middle string
+            for (int j = 1; j < parts.size() - 1 && ans; ++j) m += parts[j];
         }
-        reverse(c.begin(), c.end());
 		
-        cout << "Case #" << t + 1 << ": ";
-        if (found) cout << a << b << c << '\n';
-        else cout << "*\n";
+        reverse(r.begin(), r.end());
+        
+		// Creates at most 2 * 99 + 50 * 98 = 5098 < 1e4 characters
+        cout << (ans ? l + m + r : "*") << '\n';
     }
 }
