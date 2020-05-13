@@ -44,7 +44,7 @@ int main() {
 		
         reverse(r.begin(), r.end());
         
-		// Creates at most 2 * 99 + 50 * 98 = 5098 < 1e4 characters
+		// Creates at most ≈5000 < 10000 characters
         cout << (ans ? l + m + r : "*") << '\n';
     }
 }
