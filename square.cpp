@@ -8,7 +8,7 @@ typedef long long ll;
 constexpr int dx[4] = { 1, 0, -1, 0 }, dy[4] = { 0, 1, 0, -1 };
 
 int S[100001]; // skill levels
-vector<int> neighbor[100001]; // vector of neighbors for each competitor
+int neighbor[100001][4]; // array of neighbors for each competitor
 
 int main() {
 	if (fopen("in", "r")) freopen("in", "r", stdin), freopen("out", "w", stdout);
@@ -19,7 +19,7 @@ int main() {
 
 		int R, C; cin >> R >> C;
 		ll ans = 0, sum = 0;
-		vector<int> check; // set of candidate competitors to check
+		vector<int> check; // vector of candidate competitors to check
 		for (int i = 0; i < R; ++i) {
 			for (int j = 0; j < C; ++j) {
 				cin >> S[i * C + j]; sum += S[i * C + j];
@@ -35,7 +35,6 @@ int main() {
 		// precompute neighbors
 		for (int i = 0; i < R; ++i) {
 			for (int j = 0; j < C; ++j) {
-				neighbor[i * C + j].resize(4);
 				for (int d = 0; d < 4; ++d) {
 					int x = i + dx[d], y = j + dy[d]; // get neighbor
 					neighbor[i * C + j][d] = valid(x, y) ? x * C + y : -1;

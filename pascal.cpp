@@ -11,14 +11,14 @@ int main() {
 		
 		int N;
 		cin >> N;
-		if (N <= 31) {
-			// if N <= 31 then just use naïve method
+		if (N <= 30) {
+			// if N <= 30 then just use naïve method
 			for (int i = 0; i < N; ++i) cout << i + 1 << " " << 1 << '\n';
 		}
 		else {
-			// first we try to make N - 31
-			int sum = 0, side = 0, goal = N - 31;
-			for (int i = 0; i < 31; ++i) {
+			// first we try to make N - 30
+			int sum = 0, side = 0, goal = N - 30;
+			for (int i = 0; i < 30; ++i) {
 				cout << i + 1 << " " << (side ? i + 1 : 1) << '\n';
 
 				// each row sums to 2 ^ (i + 1)
@@ -32,7 +32,8 @@ int main() {
 				else ++sum;
 			}
 
-			for (int i = 31; sum < N; ++i, ++sum) cout << i + 1 << ' ' << (side ? i + 1 : 1) << '\n';
+			// we've undershot so we still need to walk down until our sum is N
+			for (int i = 30; sum < N; ++i, ++sum) cout << i + 1 << ' ' << (side ? i + 1 : 1) << '\n';
 		}
 	}
 }
