@@ -21,8 +21,8 @@ int main() {
 			for (int i = 0; i < 30; ++i) {
 				cout << i + 1 << " " << (side ? i + 1 : 1) << '\n';
 
-				// each row sums to 2 ^ (i + 1)
-				// check if goal has a 2 ^ (i + 1) in its binary representation
+				// each row sums to 2 ^ i
+				// check if goal has a 2 ^ i in its binary representation
 				if (goal & (1 << i)) {
 					// walk across the row
 					for (int j = 1; j <= i; ++j) cout << i + 1 << " " << (side ? i - j + 1 : j + 1) << '\n';
